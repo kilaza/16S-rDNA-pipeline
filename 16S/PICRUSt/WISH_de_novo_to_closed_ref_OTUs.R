@@ -8,13 +8,13 @@ inDir <- paste0(getwd(),"/process/PICRUSt/v3_May2016_redo_new_OTU_table") #set i
 outDir <- inDir #set output directory as appropriate
 
 #import mapping list of de novo IDs to GG IDs
-o <- read.table(paste0(inDir,"/de_novo_repset_to_GG_13_8_map_forR.txt"), sep = "\t", header =T) #import .uc file (converted to .txt file) obtained during standard cbio 16S pipeline
+o <- read.table(paste0(inDir,"/de_novo_repset_to_GG_13_8_map_forR.txt"), sep = "\t", header =F) #import .uc file (converted to .txt file) obtained during standard cbio 16S pipeline
 head(o)#note: and * in the 2nd column mean there was no GG ID match
 length(which(o[,2]=="*"))#number of OTUs with no GG matches
 o.closed <- o[o[,2]!="*",] #subset to exclude OTUs with no GG match
 dim(o.closed)#number of OTUs that remain
 head(o.closed)
-rownames(o.closed) <- o.closed[,1]
+rownames(o.closed) <- o.closed[,9]
 #import OTU table
 load(paste0(getwd(),"/process/RData/v7_primer_stripped_WISH_V1.RData"))#Change as appropriate - previously prepared OTU table from R, import as .RData object 
 
@@ -42,7 +42,7 @@ o.tab <- o.tab[rownames(o.tab)%in%o.closed[,1],]
 dim(o.tab)#
 #now substitute de novo IDs with GG IDs
 o.closed <- o.closed[rownames(o.tab),]
-rownames(o.tab) <- o.closed[,2]
+rownames(o.tab) <- o.closed[,10]
 head(o.tab)
 dim(o.tab)#
 #problem: how to deal with duplicate GG IDs - e.g. more than one of my de novo IDs map to the same GG ID
