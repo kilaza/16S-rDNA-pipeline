@@ -42,7 +42,7 @@ o.tab <- o.tab[rownames(o.tab)%in%o.closed[,1],]
 dim(o.tab)#
 #now substitute de novo IDs with GG IDs
 o.closed <- o.closed[rownames(o.tab),]
-rownames(o.tab) <- o.closed[,2]
+rownames(o.tab) <- o.closed[,10]
 head(o.tab)
 dim(o.tab)#
 #problem: how to deal with duplicate GG IDs - e.g. more than one of my de novo IDs map to the same GG ID
